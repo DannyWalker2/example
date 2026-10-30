@@ -1,2 +1,10 @@
 .env
 logs/
+
+# Fitbit: personal health data, exports, and any API secrets/tokens
+data/
+*.zip
+takeout*/
+Takeout/
+tokens*.json
+.fitbit_tokens*
