@@ -1,0 +1,14 @@
+# TEMPORARY: used while building, to test which career sites answer. Removed before merge.
+name: discover
+on:
+  push:
+    branches: [claude/inspiring-maxwell-7vgven]
+    paths: [tools/**, .github/workflows/discover.yml]
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests
+      - run: python tools/discover.py tools/candidates.json
