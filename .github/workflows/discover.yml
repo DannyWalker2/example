@@ -1,14 +1,19 @@
-# TEMPORARY: used while building, to test which career sites answer. Removed before merge.
-name: discover
+# TEMPORARY: used while building, to test the tool from GitHub's servers. Removed before merge.
+name: build-test
 on:
   push:
     branches: [claude/inspiring-maxwell-7vgven]
-    paths: [tools/**, .github/workflows/discover.yml]
 jobs:
-  discover:
+  test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - run: pip install requests
-      - run: python tools/discover.py tools/candidates.json
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - name: Full run (no commit, no issue)
+        run: python src/main.py
+      - run: cat errors.md; echo ======; cat jobs.md
+      - name: Extra discovery
+        run: python tools/discover.py tools/candidates.json

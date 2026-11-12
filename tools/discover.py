@@ -79,7 +79,7 @@ def try_simple(kind, slug):
 def discover(name, page, guesses, wd_sites=None):
     out = [f"### {name}", scan_page(page) if page else "page -> (none)"]
     tasks = []
-    with cf.ThreadPoolExecutor(32) as ex:
+    with cf.ThreadPoolExecutor(8) as ex:
         for g in guesses:
             for wd in (1, 5, 3, 12, 10):
                 for s in (wd_sites or []) + WD_SITES:
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1].endswith(".json"):
         # batch mode: list of [name, page, [guesses], [extra workday site names]]
         rows = json.load(open(sys.argv[1]))
-        with cf.ThreadPoolExecutor(4) as ex:
+        with cf.ThreadPoolExecutor(2) as ex:
             for res in ex.map(lambda r: discover(r[0], r[1], r[2], r[3] if len(r) > 3 else None), rows):
                 print(res, flush=True)
     else:
