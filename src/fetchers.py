@@ -13,6 +13,7 @@ If a site cannot be reached, the fetcher raises an error and main.py logs it.
 import html
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 
 import requests
@@ -31,8 +32,10 @@ DEFAULT_SEARCHES = ["2027", "analyst program", "development program", "graduate 
 
 # Titles that are obviously not for us; skipped before we download the full posting
 # (saves time on huge sites). Full filtering happens later in filters.py.
-QUICK_SKIP = re.compile(r"\b(intern|internship|summer|co-?op|director|vice president|vp|"
-                        r"managing director|svp|evp|senior|sr\.?|principal|head of|lead)\b", re.I)
+QUICK_SKIP = re.compile(r"\b(intern|internship|summer|co-?op|director|vice president|vp|avp|"
+                        r"managing director|svp|evp|senior|sr\.?|principal|head of|lead|manager|"
+                        r"software|engineer|developer|cyber|teller|branch|personal banker|"
+                        r"financial advisor|nurse|technician)\b", re.I)
 
 
 def strip_html(text):
@@ -110,23 +113,21 @@ def fetch_workday(firm):
                     found[path] = p
             if len(postings) < 20 or offset + 20 >= data.get("total", 0):
                 break
-    jobs = []
-    for path, p in found.items():
+    def detail(item):
+        path, p = item
         title = p.get("title", "")
-        if QUICK_SKIP.search(title):
-            continue
         # Download the full posting for description, exact date, country, job ID.
         info = {}
         try:
             d = session.get(endpoint + path, timeout=TIMEOUT)
             if d.ok:
                 info = d.json().get("jobPostingInfo", {})
-        except requests.RequestException:
+        except (requests.RequestException, ValueError):
             pass
         locs = [info.get("location") or p.get("locationsText", "")] + info.get("additionalLocations", [])
         country = (info.get("country") or {}).get("descriptor", "")
         job_id = info.get("jobReqId") or (p.get("bulletFields") or [""])[0] or path.split("_")[-1]
-        jobs.append(_job(
+        return _job(
             firm, job_id=job_id, title=title,
             location="; ".join(x for x in locs if x),
             country=country,
@@ -134,8 +135,11 @@ def fetch_workday(firm):
             url=info.get("externalUrl") or f"{root}/{site}{path}",
             description=strip_html(info.get("jobDescription", "")),
             time_type=info.get("timeType", ""),
-        ))
-    return jobs
+        )
+
+    todo = [(path, p) for path, p in found.items() if not QUICK_SKIP.search(p.get("title", ""))]
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        return list(pool.map(detail, todo))
 
 
 # --------------------------------------------------------------------------- Greenhouse
