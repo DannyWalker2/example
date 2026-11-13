@@ -1,0 +1,63 @@
+# Runs the job finder every 6 hours, plus a manual "Run workflow" button.
+# It commits jobs.md / errors.md / seen.json back to the repo and opens (or
+# updates) a GitHub Issue called "New jobs YYYY-MM-DD" when there are new matches.
+name: Find jobs
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # every 6 hours (at :17 past, in UTC). Change here.
+  workflow_dispatch:          # adds the "Run workflow" button on the Actions tab
+
+permissions:
+  contents: write   # to commit jobs.md / seen.json
+  issues: write     # to open the "New jobs" issue
+
+concurrency:
+  group: find-jobs
+  cancel-in-progress: false
+
+jobs:
+  find-jobs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Run job finder
+        id: run
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # optional
+        run: python src/main.py
+
+      - name: Save results to the repo
+        run: |
+          git config user.name "job-finder-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add jobs.md errors.md seen.json
+          git diff --cached --quiet || git commit -m "Job finder run $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git pull --rebase --autostash || true
+          git push
+
+      - name: Open or update the "New jobs" issue
+        if: steps.run.outputs.new_count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="New jobs $(date -u +%Y-%m-%d)"
+          # Mention the repo owner so GitHub always emails you.
+          printf '\ncc @%s\n' "${{ github.repository_owner }}" >> new_jobs.md
+          NUM=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number,title \
+                --jq ".[] | select(.title==\"$TITLE\") | .number" | head -n1)
+          if [ -n "$NUM" ]; then
+            gh issue comment "$NUM" --body-file new_jobs.md
+          else
+            gh issue create --title "$TITLE" --body-file new_jobs.md
+          fi

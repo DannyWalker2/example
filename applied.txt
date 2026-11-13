@@ -1,14 +1,44 @@
-# Roles Danny already applied to. Never list these. Add new ones as you apply.
-Ramirez & Co. | Public Finance Analyst
-Siebert Williams Shank | Public Finance Analyst
-JPMorgan | Analyst
-KBW / Stifel | DCM Analyst
-Piper Sandler | Public Finance Analyst
-Raymond James | Public Finance Analyst (Dana Point, CA)
-PNC | C&IB Development Program, Capital Markets track (2027)
-Stifel Bank | Venture Banking Credit Analyst (fund finance, NYC)
-BNY | 2027 Analyst Program, Credit and Lending
-CIBC | 2027 Analyst I, Debt Capital Markets (US IG Public DCM)
-S&P Global Ratings | Credit Graduate Program (2027)
-Dodge & Cox | 2027 Fixed Income Investment Associate
-Campbell Lutyens | 2027 Transaction Management Analyst (Fund Placement)
+# applied.txt - roles you already applied to (or that are closed).
+# One per line, in any of these forms:
+#   Firm                    -> every role at that firm is pushed lower (still shown, in its own section)
+#   Firm | Role title       -> roles at that firm with a matching title are hidden
+#   R-123456                -> hides that exact Job ID (copy it from the Job ID column in jobs.md)
+# Lines starting with # are ignored.
+
+BNY | Credit & Lending Analyst Program
+PNC | C&IB Development Program (Capital Markets)
+S&P Global | Ratings Credit Graduate Program
+CIBC | 2027 DCM Analyst I
+US Bank
+Stifel | Venture Banking Credit Analyst
+Western Alliance Bank
+Barings
+NERA
+Campbell Lutyens | Transaction Management Analyst
+Standard Chartered | Financial Markets Graduate Programme
+Societe Generale | Research Associate
+Fitch Group
+Lazard
+Ramirez & Co.
+Siebert Williams Shank
+JPMorgan
+KBW | DCM Analyst
+Piper Sandler
+Raymond James | Public Finance Analyst
+Capital One
+Loop Capital
+SMBC
+Dodge & Cox
+Guggenheim | Leveraged Finance
+
+# From the earlier list
+Wells Fargo | 2027 CIB Corporate Banking Analyst Program
+MUFG | 2027 CIB&M Full-Time Analyst Program, Sponsor Finance & Direct Lending
+M&T Bank | 2027 Commercial Credit Analyst Program
+PGIM | 2027 Private Credit Investment Analyst Program
+Citizens | 2027 Commercial Banker Development Program Associate
+Citi | Commercial Banking Full Time Analyst, Dallas 2027
+Citi | Capital Markets LatAm Full Time Analyst, 2027
+Morgan Stanley | 2027 Full-time Analyst Program, Fixed Income High Yield
+BMO | Commercial Analyst Development Program, New Grad 2027
+NYS Homes and Community Renewal | Municipal Finance Fellowship

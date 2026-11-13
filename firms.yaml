@@ -1,0 +1,401 @@
+# firms.yaml - the list of firms the job finder checks.
+#
+# Each firm has:
+#   name:     how it shows in jobs.md
+#   tier:     1 = top priority, 2 = good
+#   ats:      which job system the firm uses (workday, greenhouse, lever, ashby,
+#             smartrecruiters, oracle, eightfold, phenom, icims, successfactors, manual)
+#   endpoint: the address of that job system (format depends on ats, see README)
+#   aliases:  (optional) other names, used to match lines in applied.txt
+#   disabled: (optional) true = skip this firm
+#   searches: (optional) custom search words for big sites (default: 2027, analyst program, ...)
+#
+# "manual" means the firm has no public job API we could find. It is still listed
+# so it shows up in errors.md with a link you can check by hand.
+
+firms:
+  # ------------------------------------------------------------------ Tier 1
+  - name: Stifel / KBW
+    tier: 1
+    ats: icims
+    endpoint: https://careers-stifel.icims.com
+    aliases: [Stifel, KBW, KBW/Stifel, Stifel Bank, KBW / Stifel]
+  - name: Raymond James
+    tier: 1
+    ats: workday
+    endpoint: https://raymondjames.wd1.myworkdayjobs.com/wday/cxs/raymondjames/RaymondJamesCareers
+  - name: Piper Sandler
+    tier: 1
+    ats: workday
+    endpoint: https://pipersandler.wd501.myworkdayjobs.com/wday/cxs/pipersandler/Piper_Sandler_Careers
+  - name: RBC Capital Markets
+    tier: 1
+    ats: workday
+    endpoint: https://rbc.wd3.myworkdayjobs.com/wday/cxs/rbc/RBCGLOBAL1
+    aliases: [RBC]
+  - name: Jefferies
+    tier: 1
+    ats: manual
+    endpoint: https://www.jefferies.com/careers/
+  - name: Bank of America
+    tier: 1
+    ats: workday
+    endpoint: https://ghr.wd1.myworkdayjobs.com/wday/cxs/ghr/Lateral-US
+    aliases: [BofA, BofA Securities]
+  - name: Wells Fargo
+    tier: 1
+    ats: workday
+    endpoint: https://wf.wd1.myworkdayjobs.com/wday/cxs/wf/WellsFargoJobs
+  - name: Morgan Stanley
+    tier: 1
+    ats: workday
+    endpoint: https://ms.wd5.myworkdayjobs.com/wday/cxs/ms/External
+    aliases: [Morgan Stanley Investment Management]
+  - name: Barclays
+    tier: 1
+    ats: workday
+    endpoint: https://barclays.wd3.myworkdayjobs.com/wday/cxs/barclays/External_Career_Site_Barclays
+  - name: BMO
+    tier: 1
+    ats: workday
+    endpoint: https://bmo.wd3.myworkdayjobs.com/wday/cxs/bmo/External
+    aliases: [BMO Capital Markets]
+  - name: BMO (Campus site)
+    tier: 1
+    ats: workday
+    endpoint: https://bmo.wd3.myworkdayjobs.com/wday/cxs/bmo/Campus
+    aliases: [BMO]
+    searches: [""]
+  - name: KeyBanc Capital Markets
+    tier: 1
+    ats: workday
+    endpoint: https://keybank.wd5.myworkdayjobs.com/wday/cxs/keybank/External_Career_Site
+    aliases: [KeyBanc, KeyBank]
+  - name: Truist
+    tier: 1
+    ats: workday
+    endpoint: https://truist.wd1.myworkdayjobs.com/wday/cxs/truist/Careers
+    aliases: [Truist Securities]
+  - name: Huntington
+    tier: 1
+    ats: workday
+    endpoint: https://huntington.wd12.myworkdayjobs.com/wday/cxs/huntington/HNBcareers
+  - name: Citizens
+    tier: 1
+    ats: oracle
+    endpoint: https://hcgn.fa.us2.oraclecloud.com|CX_1
+    aliases: [Citizens Bank, Citizens Financial]
+  - name: TD Securities
+    tier: 1
+    ats: workday
+    endpoint: https://td.wd3.myworkdayjobs.com/wday/cxs/td/TD_Bank_Careers
+    aliases: [TD, TD Bank]
+  - name: Mizuho
+    tier: 1
+    ats: workday
+    endpoint: https://mizuho.wd1.myworkdayjobs.com/wday/cxs/mizuho/mizuhoamericas
+  - name: MUFG
+    tier: 1
+    ats: workday
+    endpoint: https://mufgub.wd3.myworkdayjobs.com/wday/cxs/mufgub/MUFG-Careers
+  - name: SMBC
+    tier: 1
+    ats: manual
+    endpoint: https://www.smbcgroup.com/americas/careers
+  - name: Santander
+    tier: 1
+    ats: workday
+    endpoint: https://santander.wd3.myworkdayjobs.com/wday/cxs/santander/SantanderCareers
+  - name: Nomura
+    tier: 1
+    ats: successfactors
+    endpoint: https://careers.nomura.com/Nomura
+  - name: CIBC
+    tier: 1
+    ats: workday
+    endpoint: https://cibc.wd3.myworkdayjobs.com/wday/cxs/cibc/search
+  - name: CIBC (Campus site)
+    tier: 1
+    ats: workday
+    endpoint: https://cibc.wd3.myworkdayjobs.com/wday/cxs/cibc/Campus
+    aliases: [CIBC]
+    searches: [""]
+  - name: BNY
+    tier: 1
+    ats: oracle
+    endpoint: https://eofe.fa.us2.oraclecloud.com|BNY-Careers
+    aliases: [BNY Mellon]
+  - name: PNC
+    tier: 1
+    ats: workday
+    endpoint: https://pnc.wd5.myworkdayjobs.com/wday/cxs/pnc/External
+  - name: US Bank
+    tier: 1
+    ats: workday
+    endpoint: https://usbank.wd1.myworkdayjobs.com/wday/cxs/usbank/US_Bank_Careers
+    aliases: [U.S. Bank, US Bancorp]
+  - name: Siebert Williams Shank
+    tier: 1
+    ats: manual
+    endpoint: https://www.siebertwilliams.com/careers
+  - name: Ramirez & Co.
+    tier: 1
+    ats: manual
+    endpoint: https://www.ramirezco.com/careers
+    aliases: [Samuel A. Ramirez, Ramirez]
+  - name: Loop Capital
+    tier: 1
+    ats: manual
+    endpoint: https://www.loopcapital.com/careers/
+  - name: Janney
+    tier: 1
+    ats: manual
+    endpoint: https://jobs.dayforcehcm.com/janney/CANDIDATEPORTAL
+  - name: HilltopSecurities
+    tier: 1
+    ats: manual
+    endpoint: https://www.hilltopsecurities.com/careers/
+    aliases: [Hilltop]
+  - name: Baird
+    tier: 1
+    ats: workday
+    endpoint: https://baird.wd1.myworkdayjobs.com/wday/cxs/baird/Careers
+  - name: Moody's
+    tier: 1
+    ats: manual
+    endpoint: https://careers.moodys.com/
+  - name: S&P Global
+    tier: 1
+    ats: workday
+    endpoint: https://spgi.wd5.myworkdayjobs.com/wday/cxs/spgi/SPGI_Careers
+    aliases: [S&P Global Ratings, S&P]
+  - name: Fitch
+    tier: 1
+    ats: successfactors
+    endpoint: https://careers.fitch.group
+    aliases: [Fitch Group, Fitch Ratings]
+  - name: KBRA
+    tier: 1
+    ats: greenhouse
+    endpoint: krollbondratingagency
+    aliases: [Kroll Bond Rating Agency]
+  - name: Morningstar DBRS
+    tier: 1
+    ats: workday
+    endpoint: https://morningstar.wd5.myworkdayjobs.com/wday/cxs/morningstar/Americas
+    aliases: [Morningstar, DBRS]
+
+  # ------------------------------------------------------------------ Tier 2
+  - name: Goldman Sachs
+    tier: 2
+    ats: manual
+    endpoint: https://higher.gs.com/
+  - name: JPMorgan
+    tier: 2
+    ats: oracle
+    endpoint: https://jpmc.fa.oraclecloud.com|CX_1001
+    aliases: [JPMorgan Chase, J.P. Morgan, JP Morgan]
+  - name: Citi
+    tier: 2
+    ats: workday
+    endpoint: https://citi.wd5.myworkdayjobs.com/wday/cxs/citi/2
+    aliases: [Citigroup, Citibank]
+  - name: Guggenheim
+    tier: 2
+    ats: manual
+    endpoint: https://www.guggenheimpartners.com/firm/careers
+    aliases: [Guggenheim Securities, Guggenheim Partners]
+  - name: Guggenheim Investments
+    tier: 2
+    ats: workday
+    endpoint: https://guggenheiminvestment.wd5.myworkdayjobs.com/wday/cxs/guggenheiminvestment/External
+  - name: Natixis
+    tier: 2
+    ats: manual
+    endpoint: https://natixis.groupebpce.com/en/careers
+  - name: BNP Paribas
+    tier: 2
+    ats: manual
+    endpoint: https://careers.bnpparibas.com/
+  - name: Societe Generale
+    tier: 2
+    ats: manual
+    endpoint: https://careers.societegenerale.com/
+    aliases: [Société Générale, SocGen]
+  - name: Standard Chartered
+    tier: 2
+    ats: manual
+    endpoint: https://www.sc.com/en/careers/
+  - name: Lazard
+    tier: 2
+    ats: oracle
+    endpoint: https://icbpjb.fa.ocs.oraclecloud.com|LazardStudentCareers
+  - name: Campbell Lutyens
+    tier: 2
+    ats: manual
+    endpoint: https://campbell-lutyens.com/careers
+  - name: Nuveen (TIAA)
+    tier: 2
+    ats: workday
+    endpoint: https://tiaa.wd1.myworkdayjobs.com/wday/cxs/tiaa/Search
+    aliases: [Nuveen, TIAA]
+  - name: PGIM (Prudential)
+    tier: 2
+    ats: workday
+    endpoint: https://pru.wd5.myworkdayjobs.com/wday/cxs/pru/Careers
+    aliases: [PGIM, Prudential]
+  - name: BlackRock
+    tier: 2
+    ats: workday
+    endpoint: https://blackrock.wd1.myworkdayjobs.com/wday/cxs/blackrock/BlackRock_Professional
+  - name: MacKay Shields (New York Life)
+    tier: 2
+    ats: successfactors
+    endpoint: https://jobs.newyorklife.com
+    aliases: [MacKay Shields, New York Life, New York Life Investments]
+  - name: AllianceBernstein
+    tier: 2
+    ats: workday
+    endpoint: https://abglobal.wd1.myworkdayjobs.com/wday/cxs/abglobal/alliancebernsteincareers
+    aliases: [AB]
+  - name: Neuberger Berman
+    tier: 2
+    ats: workday
+    endpoint: https://nb.wd1.myworkdayjobs.com/wday/cxs/nb/NBCareers
+  - name: Invesco
+    tier: 2
+    ats: workday
+    endpoint: https://invesco.wd1.myworkdayjobs.com/wday/cxs/invesco/IVZ
+  - name: Barings
+    tier: 2
+    ats: workday
+    endpoint: https://barings.wd1.myworkdayjobs.com/wday/cxs/barings/Barings
+  - name: Ares
+    tier: 2
+    ats: workday
+    endpoint: https://aresmgmt.wd1.myworkdayjobs.com/wday/cxs/aresmgmt/External
+    aliases: [Ares Management]
+  - name: Golub Capital
+    tier: 2
+    ats: workday
+    endpoint: https://wd501.myworkdaysite.com/wday/cxs/golubcapital/Golub_Capital_Careers
+    aliases: [Golub]
+  - name: Blue Owl
+    tier: 2
+    ats: workday
+    endpoint: https://blueowl.wd1.myworkdayjobs.com/wday/cxs/blueowl/BlueOwl
+  - name: HPS Investment Partners
+    tier: 2
+    ats: greenhouse
+    endpoint: hpsinvestmentpartners
+    aliases: [HPS]
+  - name: Oaktree
+    tier: 2
+    ats: workday
+    endpoint: https://oaktree.wd1.myworkdayjobs.com/wday/cxs/oaktree/Oaktree
+  - name: Apollo
+    tier: 2
+    ats: workday
+    endpoint: https://athene.wd5.myworkdayjobs.com/wday/cxs/athene/Apollo_Careers
+    aliases: [Athene]
+  - name: Susquehanna
+    tier: 2
+    ats: manual
+    endpoint: https://careers.sig.com/jobs
+    aliases: [SIG]
+  - name: Western Alliance Bank
+    tier: 2
+    ats: workday
+    endpoint: https://westernalliancebank.wd5.myworkdayjobs.com/wday/cxs/westernalliancebank/WAB
+  - name: M&T Bank
+    tier: 2
+    ats: workday
+    endpoint: https://mtb.wd5.myworkdayjobs.com/wday/cxs/mtb/MTB
+    aliases: [M&T]
+  - name: M&T Bank (Campus site)
+    tier: 2
+    ats: workday
+    endpoint: https://mtb.wd5.myworkdayjobs.com/wday/cxs/mtb/Campus
+    aliases: [M&T, M&T Bank]
+    searches: [""]
+  - name: Fifth Third
+    tier: 2
+    ats: workday
+    endpoint: https://fifththird.wd5.myworkdayjobs.com/wday/cxs/fifththird/53careers
+  - name: Capital One
+    tier: 2
+    ats: workday
+    endpoint: https://capitalone.wd12.myworkdayjobs.com/wday/cxs/capitalone/Capital_One
+  - name: State Street
+    tier: 2
+    ats: phenom
+    endpoint: https://careers.statestreet.com|en_global
+  - name: Northern Trust
+    tier: 2
+    ats: workday
+    endpoint: https://ntrs.wd1.myworkdayjobs.com/wday/cxs/ntrs/northerntrust
+  - name: Brown Brothers Harriman
+    tier: 2
+    ats: workday
+    endpoint: https://bbh.wd5.myworkdayjobs.com/wday/cxs/bbh/BBH
+    aliases: [BBH]
+  - name: NERA / Marsh McLennan
+    tier: 2
+    ats: workday
+    endpoint: https://mmc.wd1.myworkdayjobs.com/wday/cxs/mmc/MMC
+    aliases: [NERA, Marsh, Marsh McLennan, Oliver Wyman, Mercer, Guy Carpenter]
+  - name: Aon
+    tier: 2
+    ats: manual
+    endpoint: https://jobs.aon.com/jobs
+  - name: Federal Reserve Bank of New York
+    tier: 2
+    ats: workday
+    endpoint: https://rb.wd5.myworkdayjobs.com/wday/cxs/rb/FRS
+    aliases: [NY Fed, Federal Reserve]
+
+  # ------------------------------------------------------------------ Added (similar firms)
+  - name: First Citizens (SVB)
+    tier: 2
+    ats: manual
+    endpoint: https://jobs.firstcitizens.com/jobs
+    aliases: [First Citizens, SVB, Silicon Valley Bank]
+  - name: Webster Bank
+    tier: 2
+    ats: manual
+    endpoint: https://www.websterbank.com/careers/
+  - name: Valley Bank
+    tier: 2
+    ats: manual
+    endpoint: https://www.valley.com/about/careers
+  - name: Guardian Life
+    tier: 2
+    ats: workday
+    endpoint: https://guardianlife.wd5.myworkdayjobs.com/wday/cxs/guardianlife/Guardian-Life-Careers
+    aliases: [Guardian]
+  - name: PIMCO
+    tier: 2
+    ats: workday
+    endpoint: https://pimco.wd1.myworkdayjobs.com/wday/cxs/pimco/pimco-careers
+  - name: Franklin Templeton (Western Asset)
+    tier: 2
+    ats: manual
+    endpoint: https://www.franklintempleton.com/careers
+    aliases: [Franklin Templeton, Western Asset]
+  - name: MetLife Investment Management
+    tier: 2
+    ats: manual
+    endpoint: https://www.metlifecareers.com/en_US/ml
+    aliases: [MetLife, MIM]
+  - name: Lord Abbett
+    tier: 2
+    ats: manual
+    endpoint: https://www.lordabbett.com/en-us/careers.html
+  - name: Academy Securities
+    tier: 2
+    ats: manual
+    endpoint: https://academysecurities.com/careers/
+  - name: Roosevelt & Cross
+    tier: 2
+    ats: manual
+    endpoint: https://www.roosevelt-cross.com/careers
