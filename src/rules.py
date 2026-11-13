@@ -71,7 +71,8 @@ def is_us(job):
 
 
 # ---------------------------------------------------------------- hard filters
-INTERNSHIP = r"\bintern\b|\binterns\b|internship|summer analyst|summer associate|summer 20\d\d|" \
+INTERNSHIP = r"shadow (week|day)|insight (week|day|program)|spring week|discovery day|info(rmation)? session|" \
+             r"\bevent\b|webinar|talent community|\bintern\b|\binterns\b|internship|summer analyst|summer associate|summer 20\d\d|" \
              r"\bco-?op\b|externship|apprentice|fellowship program for students"
 PART_TIME = r"part[- ]time|temporary|\btemp\b|seasonal|contract(or)?\b"
 SENIOR_TITLE = r"\b(senior|sr\.?|vice president|\bvp\b|avp|director|managing director|principal|" \
@@ -99,7 +100,7 @@ ENTRY_SIGNALS = r"\b2027\b|\b2028\b|analyst program|associate program|developmen
                 r"graduate program|graduate programme|rotational|rotation program|campus|" \
                 r"early career|early-career|early talent|new grad|new graduate|recent graduate|" \
                 r"recent college|entry[- ]level|full[- ]time analyst|analyst class|class of 2027|" \
-                r"university graduate|college graduate|leadership development"
+                r"university graduate|college graduate|leadership development|leadership program|\bgraduate\b"
 MA_ONLY = r"\bm&a\b|mergers|mergers & acquisitions|mergers and acquisitions|sell[- ]side advisory|" \
           r"restructuring advisory"
 DEBT_ANGLE = r"debt|credit|leveraged|fixed income|public finance|municipal|financing|capital markets|" \
@@ -175,7 +176,7 @@ def check(job):
         return out
 
     if _has(INTERNSHIP, t):
-        return drop("internship")
+        return drop("internship or event")
     if _has(PART_TIME, t + " " + job.get("time_type", "")):
         return drop("part-time/temporary")
     if _has(SENIOR_TITLE, t):
@@ -220,8 +221,8 @@ def check(job):
 # ---------------------------------------------------------------- scoring
 # (points, label, regex on title, regex on description) - first match wins per group.
 AREAS = [
-    (45, "credit program", r"credit (analyst|development|rotation|program|training|risk analyst)|"
-                           r"credit & lending|credit and lending|underwriting|portfolio management", None),
+    (45, "credit program", r"credit (analyst|development|rotation|program|training|risk analyst|underwriting)|"
+                           r"credit & lending|credit and lending|loan underwriting|portfolio management", None),
     (45, "public finance / muni", r"public finance|municipal|\bmuni\b|tax[- ]exempt", r"public finance|municipal bond"),
     (42, "DCM / syndicate", r"debt capital markets|\bdcm\b|syndicate|capital markets financing|"
                            r"investment grade|\big\b|private placement", None),

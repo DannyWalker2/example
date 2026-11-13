@@ -162,8 +162,8 @@ firms:
     endpoint: https://baird.wd1.myworkdayjobs.com/wday/cxs/baird/Careers
   - name: Moody's
     tier: 1
-    ats: successfactors
-    endpoint: https://careers.moodys.com
+    ats: manual
+    endpoint: https://careers.moodys.com/
   - name: S&P Global
     tier: 1
     ats: workday
@@ -202,8 +202,8 @@ firms:
     aliases: [Citigroup, Citibank]
   - name: Guggenheim
     tier: 2
-    ats: workday
-    endpoint: https://guggenheim.wd1.myworkdayjobs.com/wday/cxs/guggenheim/Guggenheim_Partners
+    ats: icims
+    endpoint: https://careers-guggenheimpartners.icims.com
     aliases: [Guggenheim Securities, Guggenheim Partners]
   - name: Guggenheim Investments
     tier: 2
@@ -300,8 +300,8 @@ firms:
     aliases: [Athene]
   - name: Susquehanna
     tier: 2
-    ats: icims
-    endpoint: https://sig.icims.com
+    ats: manual
+    endpoint: https://careers.sig.com/jobs
     aliases: [SIG]
   - name: Western Alliance Bank
     tier: 2
@@ -346,8 +346,8 @@ firms:
     aliases: [NERA, Marsh, Marsh McLennan, Oliver Wyman, Mercer, Guy Carpenter]
   - name: Aon
     tier: 2
-    ats: icims
-    endpoint: https://unitedstates-aon.icims.com
+    ats: manual
+    endpoint: https://jobs.aon.com/jobs
   - name: Federal Reserve Bank of New York
     tier: 2
     ats: workday
@@ -357,8 +357,8 @@ firms:
   # ------------------------------------------------------------------ Added (similar firms)
   - name: First Citizens (SVB)
     tier: 2
-    ats: icims
-    endpoint: https://external-firstcitizens.icims.com
+    ats: manual
+    endpoint: https://jobs.firstcitizens.com/jobs
     aliases: [First Citizens, SVB, Silicon Valley Bank]
   - name: Webster Bank
     tier: 2
@@ -379,8 +379,8 @@ firms:
     endpoint: https://pimco.wd1.myworkdayjobs.com/wday/cxs/pimco/pimco-careers
   - name: Franklin Templeton (Western Asset)
     tier: 2
-    ats: workday
-    endpoint: https://franklintempleton.wd5.myworkdayjobs.com/wday/cxs/franklintempleton/Primary-External-1
+    ats: manual
+    endpoint: https://www.franklintempleton.com/careers
     aliases: [Franklin Templeton, Western Asset]
   - name: MetLife Investment Management
     tier: 2
