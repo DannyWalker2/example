@@ -89,9 +89,6 @@ NON_FINANCE = r"software|engineer|developer|cyber|information security|\bit\b|te
 DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b(spring|may|june)?\s*2027\b|" \
                      r"(start|begin|join)\w*[^.]{0,30}(summer|june|july|august|september|fall) 2027|" \
                      r"2027 (analyst|associate|graduate|full[- ]time) (program|class)"
-ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b2027\b|recent (college |university )?graduates?|" \
-                     r"new graduates?|entry[- ]level|0\s*-\s*[12] years|no (prior )?experience required|" \
-                     r"analyst program|associate program|development program|rotational program"
 ENTRY_SIGNALS = r"\b2027\b|\b2028\b|analyst program|associate program|development program|" \
                 r"graduate program|graduate programme|rotational|rotation program|campus|" \
                 r"early career|early-career|early talent|new grad|new graduate|recent graduate|" \
@@ -185,12 +182,7 @@ def check(job):
         return drop("not a finance seat")
     if is_us(job) is False:
         return drop("outside US")
-    if not (_has(ENTRY_SIGNALS, t) or _has(# For titles without a campus word, the description must clearly say it is for the class of 2027
-# (generic "entry level" text is not enough: those roles usually start right away).
-DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b(spring|may|june)?\s*2027\b|" \
-                     r"(start|begin|join)\w*[^.]{0,30}(summer|june|july|august|september|fall) 2027|" \
-                     r"2027 (analyst|associate|graduate|full[- ]time) (program|class)"
-ENTRY_SIGNALS, d)):
+    if not (_has(ENTRY_SIGNALS, t) or _has(DESC_ENTRY_SIGNALS, d)):
         return drop("not a campus / new-grad role")
     if _has(r"\bmba\b", t) or _has(r"\bmba\b[^.]{0,40}(required|candidates|students)|(current|recent) mba", d):
         return drop("MBA required")
@@ -243,12 +235,7 @@ AREAS = [
     (22, "risk / treasury / finance", r"risk|treasury|finance|financial analyst|fp&a|economic|consulting|"
                                       r"brokerage|insurance|analyst", None),
 ]
-# For titles without a campus word, the description must clearly say it is for the class of 2027
-# (generic "entry level" text is not enough: those roles usually start right away).
-DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b(spring|may|june)?\s*2027\b|" \
-                     r"(start|begin|join)\w*[^.]{0,30}(summer|june|july|august|september|fall) 2027|" \
-                     r"2027 (analyst|associate|graduate|full[- ]time) (program|class)"
-BOOSTS = [
+DESC_BOOSTS = [
     (6, "mentions muni/public finance", r"municipal|public finance|muni(cipal)? bond"),
     (5, "mentions credit analysis", r"credit analysis|credit risk|underwrit|financial statement analysis"),
     (3, "mentions fixed income", r"fixed income|bond market"),
@@ -288,12 +275,7 @@ def score(job, info, applied_firm=False):
     pts += area_pts
     reasons.append(area)
 
-    for p, label, rx in # For titles without a campus word, the description must clearly say it is for the class of 2027
-# (generic "entry level" text is not enough: those roles usually start right away).
-DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b(spring|may|june)?\s*2027\b|" \
-                     r"(start|begin|join)\w*[^.]{0,30}(summer|june|july|august|september|fall) 2027|" \
-                     r"2027 (analyst|associate|graduate|full[- ]time) (program|class)"
-BOOSTS:
+    for p, label, rx in DESC_BOOSTS:
         if _has(rx, d):
             pts += p
             reasons.append(label)
