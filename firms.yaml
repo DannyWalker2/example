@@ -202,8 +202,8 @@ firms:
     aliases: [Citigroup, Citibank]
   - name: Guggenheim
     tier: 2
-    ats: icims
-    endpoint: https://careers-guggenheimpartners.icims.com
+    ats: manual
+    endpoint: https://www.guggenheimpartners.com/firm/careers
     aliases: [Guggenheim Securities, Guggenheim Partners]
   - name: Guggenheim Investments
     tier: 2

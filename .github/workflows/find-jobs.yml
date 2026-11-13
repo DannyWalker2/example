@@ -7,9 +7,6 @@ on:
   schedule:
     - cron: "17 */6 * * *"   # every 6 hours (at :17 past, in UTC). Change here.
   workflow_dispatch:          # adds the "Run workflow" button on the Actions tab
-  push:                       # TEMPORARY end-to-end test on the build branch; removed before merge
-    branches: [claude/inspiring-maxwell-7vgven]
-    paths: [src/**, firms.yaml]
 
 permissions:
   contents: write   # to commit jobs.md / seen.json
