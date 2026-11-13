@@ -14,6 +14,6 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Full run (no commit, no issue)
         run: python src/main.py
-      - run: cat errors.md; echo ======; cat jobs.md
+      - run: cat errors.md; echo ======; cat jobs.md; echo ======; grep -i "2027\|program\|graduate" logs/dropped.tsv | head -250
       - name: Extra discovery
         run: python tools/discover.py tools/candidates.json
