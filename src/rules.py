@@ -26,13 +26,19 @@ US_CITIES = ("new york|nyc|manhattan|jersey city|newark|hoboken|charlotte|chicag
              "atlanta|san francisco|los angeles|san diego|pittsburgh|cleveland|columbus|philadelphia|"
              "st\\.? louis|saint louis|minneapolis|denver|seattle|miami|baltimore|wilmington|stamford|"
              "phoenix|richmond|detroit|cincinnati|milwaukee|nashville|tampa|buffalo|princeton")
-NON_US = ("canada|toronto|montreal|vancouver|calgary|ontario|quebec|london|united kingdom|\\buk\\b|"
-          "england|scotland|ireland|dublin|france|paris|germany|frankfurt|munich|luxembourg|"
-          "switzerland|zurich|geneva|netherlands|amsterdam|spain|madrid|italy|milan|poland|warsaw|"
-          "india|mumbai|gurugram|noida|bangalore|bengaluru|pune|hyderabad|chennai|gurgaon|singapore|hong kong|"
-          "japan|tokyo|osaka|china|shanghai|beijing|australia|sydney|melbourne|brazil|sao paulo|"
-          "mexico|argentina|chile|colombia|philippines|manila|malaysia|korea|seoul|uae|dubai|"
-          "saudi|riyadh|israel|south africa|budapest|hungary|prague|portugal|lisbon|belgium|brussels")
+NON_US_WORDS = [
+    "canada", "toronto", "montreal", "vancouver", "calgary", "ontario", "quebec", "mississauga",
+    "london", "united kingdom", "uk", "gb", "england", "scotland", "glasgow", "belfast",
+    "ireland", "dublin", "france", "paris", "germany", "frankfurt", "munich", "berlin", "luxembourg",
+    "switzerland", "zurich", "geneva", "netherlands", "amsterdam", "spain", "madrid", "italy", "milan",
+    "poland", "warsaw", "krakow", "india", "mumbai", "gurugram", "noida", "bangalore", "bengaluru", "pune",
+    "hyderabad", "chennai", "gurgaon", "singapore", "hong kong", "japan", "tokyo", "osaka", "china",
+    "shanghai", "beijing", "australia", "sydney", "melbourne", "brazil", "sao paulo", "mexico city",
+    "argentina", "chile", "colombia", "philippines", "manila", "taguig", "malaysia", "korea", "seoul",
+    "uae", "dubai", "saudi", "riyadh", "israel", "south africa", "budapest", "hungary", "prague",
+    "portugal", "lisbon", "belgium", "brussels", "bahrain", "monaco",
+]
+NON_US = r"\b(?:" + "|".join(NON_US_WORDS) + r")\b|(?<!new )\bmexico\b"
 
 NY_NJ = r"new york|\bnyc\b|manhattan|brooklyn|\bny\b|new jersey|\bnj\b|jersey city|newark|hoboken|" \
         r"princeton|iselin|parsippany|morristown|short hills|florham park|whippany|wayne|paramus"
