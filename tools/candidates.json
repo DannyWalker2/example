@@ -1,11 +1,7 @@
 [
-["Baird","https://www.bairdcareers.com/jobs",["rwbaird","baird","bairdcareers"],["Baird","Baird_Careers","BairdCareers","External"]],
-["New York Life","https://jobs.newyorklife.com/",["newyorklife","nyl","newyorklifeinsurance"],["NYL","NYLCareers","Careers","External"]],
-["Webster","https://www.websterbank.com/webster-bank-careers/",["websterbank","webster","websteronline"],["Webster","Webster_Careers","External"]],
-["Valley","https://www.valley.com/about/careers",["valley","valleynational","valleybank"],["Valley","Valley_Careers","External"]],
-["Hilltop","https://www.hilltopsecurities.com/careers/",["hilltop","hilltopholdings","hilltopsecurities"],["Hilltop","HilltopSecurities","External"]],
-["Moodys","https://careers.moodys.com/en",["moodys"],["Moodys","External"]],
-["Lord Abbett","https://www.lordabbett.com/en-us/careers.html",["lordabbett"],["LordAbbett","External"]],
-["SMBC","https://www.smbcgroup.com/americas/careers/search-jobs",["smbcgroup","smbc","smbcamericas"],["SMBC","External"]],
-["Jefferies","https://jefferies.tal.net/vx/candidate/jobboard/vacancy/1/adv/",["jefferies"],["Jefferies","External"]]
+["Guggenheim","https://guggenheim.wd1.myworkdayjobs.com/en-US/External_Careers_Site",["guggenheim"],["External_Careers_Site","Guggenheim_Partners"]],
+["Franklin","https://www.franklintempleton.com/careers/search-jobs",["franklintempleton"],["Primary-External-1","FT_Careers","External"]],
+["SIG","https://careers.sig.com/jobs",["sig"],[]],
+["Aon","https://jobs.aon.com/jobs",["aon"],[]],
+["First Citizens","https://jobs.firstcitizens.com/jobs",["firstcitizens"],[]]
 ]

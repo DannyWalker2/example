@@ -158,12 +158,12 @@ firms:
     aliases: [Hilltop]
   - name: Baird
     tier: 1
-    ats: manual
-    endpoint: https://www.bairdcareers.com/
+    ats: workday
+    endpoint: https://baird.wd1.myworkdayjobs.com/wday/cxs/baird/Careers
   - name: Moody's
     tier: 1
-    ats: manual
-    endpoint: https://careers.moodys.com/
+    ats: successfactors
+    endpoint: https://careers.moodys.com
   - name: S&P Global
     tier: 1
     ats: workday
@@ -250,8 +250,8 @@ firms:
     endpoint: https://blackrock.wd1.myworkdayjobs.com/wday/cxs/blackrock/BlackRock_Professional
   - name: MacKay Shields (New York Life)
     tier: 2
-    ats: manual
-    endpoint: https://jobs.newyorklife.com/
+    ats: successfactors
+    endpoint: https://jobs.newyorklife.com
     aliases: [MacKay Shields, New York Life, New York Life Investments]
   - name: AllianceBernstein
     tier: 2

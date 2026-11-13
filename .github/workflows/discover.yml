@@ -14,6 +14,14 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Full run (no commit, no issue)
         run: python src/main.py
-      - run: cat errors.md; echo ======; cat jobs.md; echo ======; grep -i "2027\|program\|graduate" logs/dropped.tsv | head -250
+      - run: cat errors.md; echo ======; cat jobs.md; echo ======; grep -i "2027\|program\|graduate" logs/dropped.tsv | grep -v "outside US\|internship" | tail -n +100 | head -200
       - name: Extra discovery
         run: python tools/discover.py tools/candidates.json
+      - name: Debug zero-result sites
+        run: |
+          for u in "https://careers-stifel.icims.com/jobs/search?ss=1&searchKeyword=analyst&in_iframe=1" "https://sig.icims.com/jobs/search?ss=1&searchKeyword=analyst&in_iframe=1" "https://unitedstates-aon.icims.com/jobs/search?ss=1&searchKeyword=analyst&in_iframe=1" "https://external-firstcitizens.icims.com/jobs/search?ss=1&searchKeyword=analyst&in_iframe=1" "https://careers.moodys.com/search/?q=analyst" "https://jobs.newyorklife.com/search/?q=analyst"; do
+            echo "== $u"; curl -sSL -A "Mozilla/5.0" -o /tmp/p.html -w "%{http_code} %{url_effective}\n" "$u" || true
+            grep -o 'href="[^"]*/jobs/[0-9]*/[^"]*"' /tmp/p.html | head -3; grep -o 'class="[^"]*jobTitle[^"]*"' /tmp/p.html | head -2; grep -c "data-row" /tmp/p.html || true
+          done
+          curl -sS -X POST -H 'Content-Type: application/json' -d '{"appliedFacets":{},"limit":2,"offset":0,"searchText":""}' https://guggenheim.wd1.myworkdayjobs.com/wday/cxs/guggenheim/Guggenheim_Partners/jobs | head -c 400; echo
+          curl -sS -X POST -H 'Content-Type: application/json' -d '{"appliedFacets":{},"limit":2,"offset":0,"searchText":""}' https://franklintempleton.wd5.myworkdayjobs.com/wday/cxs/franklintempleton/Primary-External-1/jobs | head -c 400; echo

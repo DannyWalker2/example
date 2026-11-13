@@ -29,7 +29,7 @@ US_CITIES = ("new york|nyc|manhattan|jersey city|newark|hoboken|charlotte|chicag
 NON_US = ("canada|toronto|montreal|vancouver|calgary|ontario|quebec|london|united kingdom|\\buk\\b|"
           "england|scotland|ireland|dublin|france|paris|germany|frankfurt|munich|luxembourg|"
           "switzerland|zurich|geneva|netherlands|amsterdam|spain|madrid|italy|milan|poland|warsaw|"
-          "india|mumbai|bangalore|bengaluru|pune|hyderabad|chennai|gurgaon|singapore|hong kong|"
+          "india|mumbai|gurugram|noida|bangalore|bengaluru|pune|hyderabad|chennai|gurgaon|singapore|hong kong|"
           "japan|tokyo|osaka|china|shanghai|beijing|australia|sydney|melbourne|brazil|sao paulo|"
           "mexico|argentina|chile|colombia|philippines|manila|malaysia|korea|seoul|uae|dubai|"
           "saudi|riyadh|israel|south africa|budapest|hungary|prague|portugal|lisbon|belgium|brussels")
@@ -54,10 +54,10 @@ def is_us(job):
         return False
     if _has(r"united states|\busa\b|\bu\.s\.|\bus\b", loc) and not _has(NON_US, loc):
         return True
-    if any(re.search(rf"(,|\b){s}\b", loc) for s in US_STATES) or _has(US_STATE_NAMES, loc) or _has(US_CITIES, loc):
-        return True
     if _has(NON_US, loc):
         return False
+    if any(re.search(rf"(,|\b){s}\b", loc) for s in US_STATES) or _has(US_STATE_NAMES, loc) or _has(US_CITIES, loc):
+        return True
     m = re.search(r",\s*([A-Z]{2})\s*$", loc)
     if m and m.group(1) not in US_STATES + ["US"]:
         return False
@@ -78,13 +78,18 @@ RETAIL = r"premier advisor|private client banker|client associate|financial solu
          r"private client advisor|retail (sales|brokerage|banking)|registered representative|" \
          r"financial professional|insurance agent|sales agent"
 MUNI_ADVISORY = r"municipal advis|financial advisory services|\bmunicipal advisor"
-NON_FINANCE = r"software|engineer|developer|cyber|information security|\bit\b|technology(?! (investment |corporate )?banking)|application development|" \
+NON_FINANCE = r"software|engineer|developer|cyber|information security|\bit\b|technology(?! (investment |corporate )?banking)|application|programmer|\bpmo\b|support analyst|data & ai|" \
               r"\bpeople\b|talent|audit|compliance|operations|fraud|contact center|client service|" \
               r"document|processor|coordinator|representative|clerk|legal|solutions? architect|product analyst|" \
               r"data scien|machine learning|\bai\b|human resources|\bhr\b|recruit|marketing|" \
               r"graphic|nurse|legal assistant|paralegal|attorney|facilities|administrative assistant|" \
               r"executive assistant|call center|customer service|technician|mechanic|driver"
-DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b2027\b|recent (college |university )?graduates?|" \
+# For titles without a campus word, the description must clearly say it is for the class of 2027
+# (generic "entry level" text is not enough: those roles usually start right away).
+DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b(spring|may|june)?\s*2027\b|" \
+                     r"(start|begin|join)\w*[^.]{0,30}(summer|june|july|august|september|fall) 2027|" \
+                     r"2027 (analyst|associate|graduate|full[- ]time) (program|class)"
+ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b2027\b|recent (college |university )?graduates?|" \
                      r"new graduates?|entry[- ]level|0\s*-\s*[12] years|no (prior )?experience required|" \
                      r"analyst program|associate program|development program|rotational program"
 ENTRY_SIGNALS = r"\b2027\b|\b2028\b|analyst program|associate program|development program|" \
@@ -180,7 +185,12 @@ def check(job):
         return drop("not a finance seat")
     if is_us(job) is False:
         return drop("outside US")
-    if not (_has(ENTRY_SIGNALS, t) or _has(DESC_ENTRY_SIGNALS, d)):
+    if not (_has(ENTRY_SIGNALS, t) or _has(# For titles without a campus word, the description must clearly say it is for the class of 2027
+# (generic "entry level" text is not enough: those roles usually start right away).
+DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b(spring|may|june)?\s*2027\b|" \
+                     r"(start|begin|join)\w*[^.]{0,30}(summer|june|july|august|september|fall) 2027|" \
+                     r"2027 (analyst|associate|graduate|full[- ]time) (program|class)"
+ENTRY_SIGNALS, d)):
         return drop("not a campus / new-grad role")
     if _has(r"\bmba\b", t) or _has(r"\bmba\b[^.]{0,40}(required|candidates|students)|(current|recent) mba", d):
         return drop("MBA required")
@@ -233,7 +243,12 @@ AREAS = [
     (22, "risk / treasury / finance", r"risk|treasury|finance|financial analyst|fp&a|economic|consulting|"
                                       r"brokerage|insurance|analyst", None),
 ]
-DESC_BOOSTS = [
+# For titles without a campus word, the description must clearly say it is for the class of 2027
+# (generic "entry level" text is not enough: those roles usually start right away).
+DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b(spring|may|june)?\s*2027\b|" \
+                     r"(start|begin|join)\w*[^.]{0,30}(summer|june|july|august|september|fall) 2027|" \
+                     r"2027 (analyst|associate|graduate|full[- ]time) (program|class)"
+BOOSTS = [
     (6, "mentions muni/public finance", r"municipal|public finance|muni(cipal)? bond"),
     (5, "mentions credit analysis", r"credit analysis|credit risk|underwrit|financial statement analysis"),
     (3, "mentions fixed income", r"fixed income|bond market"),
@@ -273,7 +288,12 @@ def score(job, info, applied_firm=False):
     pts += area_pts
     reasons.append(area)
 
-    for p, label, rx in DESC_BOOSTS:
+    for p, label, rx in # For titles without a campus word, the description must clearly say it is for the class of 2027
+# (generic "entry level" text is not enough: those roles usually start right away).
+DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b(spring|may|june)?\s*2027\b|" \
+                     r"(start|begin|join)\w*[^.]{0,30}(summer|june|july|august|september|fall) 2027|" \
+                     r"2027 (analyst|associate|graduate|full[- ]time) (program|class)"
+BOOSTS:
         if _has(rx, d):
             pts += p
             reasons.append(label)
