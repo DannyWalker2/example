@@ -76,8 +76,24 @@ def try_simple(kind, slug):
     return None
 
 
+def workday_root(tenant, wd):
+    """The bare Workday host often redirects to the firm's default career site."""
+    try:
+        r = requests.get(f"https://{tenant}.wd{wd}.myworkdayjobs.com/", headers=UA, timeout=15)
+        if r.ok and r.url.rstrip("/") != f"https://{tenant}.wd{wd}.myworkdayjobs.com":
+            return f"workday root {tenant}.wd{wd} -> {r.url}"
+    except Exception:
+        pass
+    return None
+
+
 def discover(name, page, guesses, wd_sites=None):
     out = [f"### {name}", scan_page(page) if page else "page -> (none)"]
+    for g in guesses:
+        for wd in (1, 3, 5, 12, 10, 501):
+            hit = workday_root(g, wd)
+            if hit:
+                out.append(hit)
     tasks = []
     with cf.ThreadPoolExecutor(8) as ex:
         for g in guesses:

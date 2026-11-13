@@ -395,7 +395,8 @@ def fetch_successfactors(firm):
     The search page /search/?q=... is HTML with one row per job.
     endpoint = "https://careers.fitch.group"
     """
-    site = firm["endpoint"].rstrip("/")
+    site = firm["endpoint"].rstrip("/")          # may include a path, e.g. https://careers.nomura.com/Nomura
+    host = "/".join(site.split("/")[:3])          # https://careers.nomura.com
     jobs, seen = [], set()
     for query in _searches(firm):
         r = requests.get(f"{site}/search/", params={"q": query, "sortColumn": "referencedate",
@@ -403,7 +404,7 @@ def fetch_successfactors(firm):
                          headers={**HEADERS, "Accept": "text/html"}, timeout=TIMEOUT)
         r.raise_for_status()
         for row in re.findall(r'<tr class="data-row.*?</tr>', r.text, re.S):
-            a = re.search(r'href="(/job/[^"]+?/(\d+)/?)"[^>]*>(.*?)</a>', row, re.S)
+            a = re.search(r'href="((?:/[\w-]+)?/job/[^"]+?/(\d+)/?)"[^>]*>(.*?)</a>', row, re.S)
             if not a:
                 continue
             path, jid, title = a.group(1), a.group(2), strip_html(a.group(3))
@@ -420,7 +421,7 @@ def fetch_successfactors(firm):
                     pass
             desc = ""
             try:
-                d = requests.get(site + path, headers={**HEADERS, "Accept": "text/html"}, timeout=TIMEOUT).text
+                d = requests.get(host + path, headers={**HEADERS, "Accept": "text/html"}, timeout=TIMEOUT).text
                 body = re.search(r'class="jobdescription"(.*?)</span>\s*</div>', d, re.S) or \
                     re.search(r'itemprop="description"(.*?)</div>', d, re.S)
                 desc = strip_html(body.group(1) if body else "")[:8000]
@@ -428,7 +429,7 @@ def fetch_successfactors(firm):
                 pass
             jobs.append(_job(firm, job_id=jid, title=title,
                              location=strip_html(loc.group(1)) if loc else "",
-                             posted=posted, url=site + path, description=desc))
+                             posted=posted, url=host + path, description=desc))
     return jobs
 
 

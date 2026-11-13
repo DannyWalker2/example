@@ -27,7 +27,7 @@ firms:
   - name: Piper Sandler
     tier: 1
     ats: workday
-    endpoint: https://pipersandler.wd1.myworkdayjobs.com/wday/cxs/pipersandler/PSC
+    endpoint: https://pipersandler.wd501.myworkdayjobs.com/wday/cxs/pipersandler/Piper_Sandler_Careers
   - name: RBC Capital Markets
     tier: 1
     ats: workday
@@ -108,8 +108,8 @@ firms:
     endpoint: https://santander.wd3.myworkdayjobs.com/wday/cxs/santander/SantanderCareers
   - name: Nomura
     tier: 1
-    ats: workday
-    endpoint: https://nomura.wd3.myworkdayjobs.com/wday/cxs/nomura/Nomura_Campus
+    ats: successfactors
+    endpoint: https://careers.nomura.com/Nomura
   - name: CIBC
     tier: 1
     ats: workday
@@ -150,7 +150,7 @@ firms:
   - name: Janney
     tier: 1
     ats: manual
-    endpoint: https://www.janney.com/careers
+    endpoint: https://jobs.dayforcehcm.com/janney/CANDIDATEPORTAL
   - name: HilltopSecurities
     tier: 1
     ats: manual
@@ -158,8 +158,8 @@ firms:
     aliases: [Hilltop]
   - name: Baird
     tier: 1
-    ats: workday
-    endpoint: https://rwbaird.wd1.myworkdayjobs.com/wday/cxs/rwbaird/Baird
+    ats: manual
+    endpoint: https://www.bairdcareers.com/
   - name: Moody's
     tier: 1
     ats: manual
@@ -250,8 +250,8 @@ firms:
     endpoint: https://blackrock.wd1.myworkdayjobs.com/wday/cxs/blackrock/BlackRock_Professional
   - name: MacKay Shields (New York Life)
     tier: 2
-    ats: workday
-    endpoint: https://newyorklife.wd1.myworkdayjobs.com/wday/cxs/newyorklife/NYLCareers
+    ats: manual
+    endpoint: https://jobs.newyorklife.com/
     aliases: [MacKay Shields, New York Life, New York Life Investments]
   - name: AllianceBernstein
     tier: 2
@@ -336,8 +336,8 @@ firms:
     endpoint: https://ntrs.wd1.myworkdayjobs.com/wday/cxs/ntrs/northerntrust
   - name: Brown Brothers Harriman
     tier: 2
-    ats: manual
-    endpoint: https://www.bbh.com/us/en/careers.html
+    ats: workday
+    endpoint: https://bbh.wd5.myworkdayjobs.com/wday/cxs/bbh/BBH
     aliases: [BBH]
   - name: NERA / Marsh McLennan
     tier: 2

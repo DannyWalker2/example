@@ -92,7 +92,6 @@ def applied_status(job, firm_cfg, applied):
         role_words = set(norm(e["role"])) - STOP
         if role_words and len(role_words & title_words) / len(role_words) >= 0.6:
             return "hide"
-        status = "firm"
     return status
 
 
@@ -199,7 +198,7 @@ def run(test_only=False):
     applied = load_applied()
     seen = load_seen()
     by_name = {f["name"]: f for f in firms}
-    matches, dropped = [], {}
+    matches, dropped, debug = [], {}, []
     for firm_name, jobs in results.items():
         fcfg = by_name[firm_name]
         uniq = {}
@@ -208,7 +207,9 @@ def run(test_only=False):
         for j in uniq.values():
             info = rules.check(j)
             if not info["keep"]:
-                dropped[info["dropped"]] = dropped.get(info["dropped"], 0) + 1
+                why = re.sub(r" \(.*", "", info["dropped"])
+                dropped[why] = dropped.get(why, 0) + 1
+                debug.append(f"{firm_name}\t{j['title']}\t{j['location']}\t{info['dropped']}")
                 continue
             status = applied_status(j, fcfg, applied)
             if status == "hide":
@@ -223,6 +224,10 @@ def run(test_only=False):
             j["key"] = f"{firm_name}|{j['job_id'] or j['url']}"
             j["is_new"] = j["key"] not in seen
             matches.append(j)
+
+    # Debug list of every dropped job and why (not committed; handy when tuning rules.py)
+    (ROOT / "logs").mkdir(exist_ok=True)
+    (ROOT / "logs" / "dropped.tsv").write_text("firm\ttitle\tlocation\treason\n" + "\n".join(sorted(debug)))
 
     new = [j for j in matches if j["is_new"]]
     with_claude = claude_rate.enabled()

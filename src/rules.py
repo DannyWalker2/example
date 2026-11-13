@@ -52,11 +52,14 @@ def is_us(job):
         if "united states" in country or country in ("us", "usa", "u.s."):
             return True
         return False
-    if _has(r"united states|\busa\b|\bu\.s\.|\bus\b", loc):
+    if _has(r"united states|\busa\b|\bu\.s\.|\bus\b", loc) and not _has(NON_US, loc):
         return True
     if any(re.search(rf"(,|\b){s}\b", loc) for s in US_STATES) or _has(US_STATE_NAMES, loc) or _has(US_CITIES, loc):
         return True
     if _has(NON_US, loc):
+        return False
+    m = re.search(r",\s*([A-Z]{2})\s*$", loc)
+    if m and m.group(1) not in US_STATES + ["US"]:
         return False
     return None
 
@@ -66,16 +69,24 @@ INTERNSHIP = r"\bintern\b|\binterns\b|internship|summer analyst|summer associate
              r"\bco-?op\b|externship|apprentice|fellowship program for students"
 PART_TIME = r"part[- ]time|temporary|\btemp\b|seasonal|contract(or)?\b"
 SENIOR_TITLE = r"\b(senior|sr\.?|vice president|\bvp\b|avp|director|managing director|principal|" \
-               r"head of|lead|manager|executive director|chief|partner|specialist iii|officer iii)\b"
-RETAIL = r"financial advisor|financial adviser|financial planner|wealth (management )?(advisor|sales)|" \
+               r"head|lead|leader|manager|mgr|executive director|chief|partner|officer|supervisor|" \
+               r"architect|consultant ii|analyst ii|analyst iii|associate ii)\b"
+RETAIL = r"premier advisor|private client banker|client associate|financial solutions advisor|" \
+         r"advisor development|loan officer|mortgage|home lending|financial center|virtual engagement|" \
+         r"wealth management|private bank advisor|banker - |sales representative|financial advisor|financial adviser|financial planner|wealth (management )?(advisor|sales)|" \
          r"personal banker|relationship banker|universal banker|branch|teller|client service associate|" \
          r"private client advisor|retail (sales|brokerage|banking)|registered representative|" \
          r"financial professional|insurance agent|sales agent"
 MUNI_ADVISORY = r"municipal advis|financial advisory services|\bmunicipal advisor"
-NON_FINANCE = r"software|engineer|developer|cyber|information security|\bit\b|technology analyst|" \
+NON_FINANCE = r"software|engineer|developer|cyber|information security|\bit\b|technology(?! (investment |corporate )?banking)|application development|" \
+              r"\bpeople\b|talent|audit|compliance|operations|fraud|contact center|client service|" \
+              r"document|processor|coordinator|representative|clerk|legal|solutions? architect|product analyst|" \
               r"data scien|machine learning|\bai\b|human resources|\bhr\b|recruit|marketing|" \
               r"graphic|nurse|legal assistant|paralegal|attorney|facilities|administrative assistant|" \
               r"executive assistant|call center|customer service|technician|mechanic|driver"
+DESC_ENTRY_SIGNALS = r"class of 2027|graduat\w*[^.]{0,60}\b2027\b|recent (college |university )?graduates?|" \
+                     r"new graduates?|entry[- ]level|0\s*-\s*[12] years|no (prior )?experience required|" \
+                     r"analyst program|associate program|development program|rotational program"
 ENTRY_SIGNALS = r"\b2027\b|\b2028\b|analyst program|associate program|development program|" \
                 r"graduate program|graduate programme|rotational|rotation program|campus|" \
                 r"early career|early-career|early talent|new grad|new graduate|recent graduate|" \
@@ -169,9 +180,9 @@ def check(job):
         return drop("not a finance seat")
     if is_us(job) is False:
         return drop("outside US")
-    if not _has(ENTRY_SIGNALS, both):
+    if not (_has(ENTRY_SIGNALS, t) or _has(DESC_ENTRY_SIGNALS, d)):
         return drop("not a campus / new-grad role")
-    if _has(r"\bmba\b[^.]{0,40}(required|candidates|students)|(current|recent) mba", both):
+    if _has(r"\bmba\b", t) or _has(r"\bmba\b[^.]{0,40}(required|candidates|students)|(current|recent) mba", d):
         return drop("MBA required")
     if _has(r"\bcfa charter(holder)?\b[^.]{0,30}required", both):
         return drop("CFA charter required")
